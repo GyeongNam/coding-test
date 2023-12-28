@@ -12,7 +12,7 @@ class Solution {
         System.out.println(answer);
         return answer;
     }
-        public static void dfs(int[][] computers, int i, boolean[] visited){
+    public static void dfs(int[][] computers, int i, boolean[] visited){
         visited[i] = true;
 
         for (int j = 0; j < computers.length; j++) {
