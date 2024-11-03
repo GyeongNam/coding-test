@@ -1,41 +1,41 @@
-import java.util.*;
-class Solution {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Solution {
     public int solution(int[][] board) {
-        int answer = 0;
-        int [][] board2 = new int[board.length][board[0].length];
-        int Index = 0;
-        for (int[] rows : board) {
-            board2[Index] = Arrays.copyOf(rows, board[Index].length);
-            Index++;
-        }
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                int val = board[i][j];
-                
-                // if(val == 0) continue;
-                if(board[i][j] == 1){
-                    for (int r = i - 1; r <= i + 1 ; r++) {
-                    if(r < 0 || r >= board2.length) continue;
+        int n = board.length;
+        Map<String, Boolean> dangerMap = new HashMap<>();
+        int safeCount = n * n;
+        
+        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 1) {
+                    String minePosition = i + "," + j;
 
-                    for (int c = j - 1; c <= j + 1; c++) {
-                        if(c < 0 || c >= board2.length) continue;
-
-                        board2[r][c] = 1;
+                    if (!dangerMap.containsKey(minePosition)) {
+                        dangerMap.put(minePosition, true);
+                        safeCount--;
+                    }
+                    
+                    for (int d = 0; d < 8; d++) {
+                        int nx = i + dx[d];
+                        int ny = j + dy[d];
+                        
+                        if (nx >= 0 && nx < n && ny >= 0 && ny < n) {
+                            String dangerPosition = nx + "," + ny;
+                            if (!dangerMap.containsKey(dangerPosition)) {
+                                dangerMap.put(dangerPosition, true);
+                                safeCount--;
+                            }
+                        }
                     }
                 }
-                }
-                
-                
             }
         }
-        System.out.println(Arrays.deepToString(board2));
-        for (int[] intlist : board2) {
-            for (int list : intlist) {
-                if(list == 0){
-                    answer++;
-                }                
-            }
-        }
-        return answer;
+        
+        return safeCount;
     }
 }
