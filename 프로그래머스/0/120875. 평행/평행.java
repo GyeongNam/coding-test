@@ -1,22 +1,17 @@
 class Solution {
-    private boolean Giulgi(int[] dot1, int[] dot2, int[] dot3, int[] dot4) {
-        return (dot2[1] - dot1[1]) * (dot4[0] - dot3[0]) == (dot4[1] - dot3[1]) * (dot2[0] - dot1[0]);
-    }
+    int[][] dots;
 
     public int solution(int[][] dots) {
-        for (int i = 0; i < dots.length - 1; i++) {
-            for (int j = i + 1; j < dots.length; j++) {
-                for (int k = 0; k < dots.length - 1; k++) {
-                    for (int l = k + 1; l < dots.length; l++) {
-                        if (i != k && i != l && j != k && j != l) {
-                            if (Giulgi(dots[i], dots[j], dots[k], dots[l])) {
-                                return 1; 
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        this.dots = dots;
+        if (parallel(0, 1, 2, 3)) return 1;
+        if (parallel(0, 2, 1, 3)) return 1;
+        if (parallel(0, 3, 1, 2)) return 1;
         return 0;
+    }
+
+    boolean parallel(int a, int b, int c, int d) {
+        int x = (dots[a][0] - dots[b][0]) * (dots[c][1] - dots[d][1]);
+        int y = (dots[a][1] - dots[b][1]) * (dots[c][0] - dots[d][0]);
+        return x == y ;
     }
 }
