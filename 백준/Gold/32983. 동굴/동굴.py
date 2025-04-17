@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def max_profit(N, M, C, S_r, S_c, cave):
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     dist = [[-1] * M for _ in range(N)]
